@@ -7,6 +7,12 @@ import pyqrcode
 import requests
 from PIL import Image
 from line_notify import line_notify
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(13,GPIO.OUT)
+GPIO.output(13,GPIO.HIGH)
 
 state = False
 response = None
@@ -28,7 +34,7 @@ class MyApp(QWidget):
         global response
         global qr_show
 
-        part_file = "C:/Users/Natchaipon/Documents/promptplay/url.png"
+        part_file = "url.png"
 
         try:
             if state == False:
@@ -39,7 +45,7 @@ class MyApp(QWidget):
                 url.png(part_file , scale=5)
                 self.label = QtWidgets.QLabel()
                 self.ui.label.setText("")
-                self.ui.label.setPixmap(QtGui.QPixmap("C:/Users/Natchaipon/Documents/promptplay/url.png"))
+                self.ui.label.setPixmap(QtGui.QPixmap("url.png"))
                 self.ui.label.setObjectName("label")
 
                 # self.ui.label.setPixmap(QtGui.QPixmap("C:/Users/Natchaipon/Documents/promptplay/url.png"))
@@ -64,6 +70,9 @@ class MyApp(QWidget):
                 if response_check_money.text == 'true':
                     print("ชำระเงินสำเร็จแล้ว")
                     line_notify()
+                    GPIO.output(13,GPIO.LOW)
+                    time.sleep(5)
+                    GPIO.output(13,GPIO.HIGH)
                     # self.close()
                         # qr_show.close()
                     state = False
