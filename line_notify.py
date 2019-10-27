@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 def line_notify():
     url = 'https://notify-api.line.me/api/notify'
@@ -8,9 +9,10 @@ def line_notify():
                 'application/x-www-form-urlencoded',
                 'Authorization':'Bearer ' + token
             }
-
-    # while True:
-    msg = "ชำระเงินสำเร็จ"
+    date_time_now = datetime.datetime.now()
+    date_time_now_sub = str(date_time_now)
+    # print(date_time_now_sub[])
+    msg = "ชำระเงินสำเร็จ" + " " + date_time_now_sub[:-7]
     r = requests.post(url, headers=headers , data = {'message':msg})
     print(r.text)
 

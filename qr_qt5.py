@@ -34,7 +34,7 @@ class MyApp(QWidget):
             if state == False:
                 gen_id = requests.get('https://scb.azurewebsites.net/api/Qr')
                 response = gen_id.json()
-                # print(response)
+                print(response)
                 url = pyqrcode.create(response['data']['qrRawData'])
                 url.png(part_file , scale=5)
                 self.label = QtWidgets.QLabel()
